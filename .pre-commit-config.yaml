@@ -26,7 +26,7 @@ repos:
         # Optional, if specified, hook will work only on these branches
         # otherwise it will work on all branches
         # args: []
-    # -   id: check-unapplied-migrations
+    -   id: check-unapplied-migrations
     # -   id: check-absent-migrations
     -   id: po-location-format
         # Mandatory, select one of the following options:
@@ -39,14 +39,14 @@ repos:
     hooks:
       - id: isort
 
-# -   repo: https://github.com/python-poetry/poetry
-#     rev: 1.2.2  # add version here
-#     hooks:
-#       - id: poetry-check
-#       - id: poetry-lock
-#       - id: poetry-export
-#         args: ["-f", "requirements.txt", "-o", "requirements.txt","--without-hashes"]
-#         files: 'poetry.lock'
+-   repo: https://github.com/python-poetry/poetry
+    rev: 1.3.0  # add version here
+    hooks:
+      - id: poetry-check
+      - id: poetry-lock
+      - id: poetry-export
+        args: ["-f", "requirements.txt", "-o", "requirements.txt","--without-hashes"]
+        files: 'poetry.lock'
 
 -   repo: https://github.com/browniebroke/django-codemod
     # Any tag/version (>1.2.0):

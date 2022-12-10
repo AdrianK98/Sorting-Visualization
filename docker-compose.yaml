@@ -1,6 +1,7 @@
 services:
   app:
-    build: .
+    build:
+      context: .
     ports:
       - 8000:8000
     tty: true
@@ -25,8 +26,6 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
-
-
 
   postgres:
     image: postgres:15-alpine
