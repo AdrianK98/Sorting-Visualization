@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Bubble Sort Visualization</title>
+    <!-- include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <styles>
+        #myChart {
+            width: 300px;
+            height: 200px;
+          }
+    </styles>
+  </head>
+  <body>
+    <h1>Bubble Sort Visualization</h1>
+
+    <p>Original list: {{ original_list }}</p>
+    <p>Sorted list: {{ sorted_list }}</p>
+
+    <!-- create a canvas element to draw the chart on -->
+    <canvas id="myChart" width="100" height="100"></canvas>
+
+    <button onclick="startAnimation()">Start Animation</button>
+
+    <script>
+      var steps;
+      var step = 0;
+      var chart;
+      var original_list = {{original_list}};
+
+      // parse the JSON data passed from the backend
+      steps = JSON.parse('{{ steps|escapejs }}');
+
+      // initialize the chart when the page loads
+      window.onload = function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [...Array(original_list.length).keys()],
+            datasets: [{
+              label: 'Values',
+              data: original_list,
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+      }
+
+      function startAnimation() {
+        // start the animation loop
+        setInterval(animateStep, 1);
+      }
+
+      function animateStep() {
+        // update the chart data with the current list items
+        chart.data.datasets[0].data = steps[step];
+        chart.update();
+
+        // go to the next step
+        step++;
+
+        // stop the animation if we have reached the end
+        if (step >= steps.length) {
+          clearInterval(animateStep);
+        }
+      }
+    </script>
+  </body>
+</html>
