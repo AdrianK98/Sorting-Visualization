@@ -11,7 +11,6 @@ repos:
     -   id: mixed-line-ending
     -   id: check-toml
     -   id: name-tests-test
-    -   id: requirements-txt-fixer
     -   id: pretty-format-json
 
 -   repo: https://github.com/psf/black
