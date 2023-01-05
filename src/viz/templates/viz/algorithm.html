@@ -1,80 +1,82 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Bubble Sort Visualization</title>
-    <!-- include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <styles>
-        #myChart {
-            width: 300px;
-            height: 200px;
-          }
-    </styles>
-  </head>
-  <body>
-    <h1>Bubble Sort Visualization</h1>
+<head>
+  <meta charset="utf-8">
+  <title>Bubble Sort Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    .bar {
+      fill: steelblue;
+    }
+  </style>
+</head>
+<body>
 
-    <p>Original list: {{ original_list }}</p>
-    <p>Sorted list: {{ sorted_list }}</p>
+  <button id="start-button" onclick="update(animations)">Start</button>
+  <div id="visualization"></div>
 
-    <!-- create a canvas element to draw the chart on -->
-    <canvas id="myChart" width="100" height="100"></canvas>
+<script>
+    var arrayList = {{valueList}};
+    var animations = {{animations}};
+    // Set up the svg element
+// Set up the canvas
 
-    <button onclick="startAnimation()">Start Animation</button>
+var canvas;
+var array = {{valueList}};
+var barWidth;
+var barSpacing=5;
+var swapPos=[-1]
 
-    <script>
-      var steps;
-      var step = 0;
-      var chart;
-      var original_list = {{original_list}};
+function setup() {
+  canvas = createCanvas(500, 500);
+  barWidth = (width / array.length) - 10;  // decrease the width to add space between the bars
+}
 
-      // parse the JSON data passed from the backend
-      steps = JSON.parse('{{ steps|escapejs }}');
+// Draw the bars
+function draw() {
+  background(255);
+  for (var i = 0; i < array.length; i++) {
+    if (swapPos.includes(i)){
+      fill(255,0,0)
+    }
+    else{
+      fill(0);
+    }
+    rect(i * (barWidth + barSpacing), 0, barWidth, array[i]*20);
+    fill(255);  // change the fill color to white
+    text(array[i], i * (barWidth + barSpacing) + barWidth / 2, array[i] * 10 - 5);  // draw the text above the bar
+  }
+}
 
-      // initialize the chart when the page loads
-      window.onload = function() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: [...Array(original_list.length).keys()],
-            datasets: [{
-              label: 'Values',
-              data: original_list,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }
-        });
-      }
 
-      function startAnimation() {
-        // start the animation loop
-        setInterval(animateStep, 1);
-      }
 
-      function animateStep() {
-        // update the chart data with the current list items
-        chart.data.datasets[0].data = steps[step];
-        chart.update();
+// Define the update function
+function update(animations) {
+  // Iterate over the animations
+  for (var i = 0; i < animations.length; i++) {
+    // Use a closure to preserve the value of i
+    (function(i) {
+      setTimeout(function() {
+        var animation = animations[i];
+        var a = animation[0];
+        var b = animation[1];
 
-        // go to the next step
-        step++;
+        // Swap the elements
+        var temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
 
-        // stop the animation if we have reached the end
-        if (step >= steps.length) {
-          clearInterval(animateStep);
-        }
-      }
-    </script>
-  </body>
+        swapPos = [a,b];
+        // Redraw the bars
+        draw();
+      }, 500*i);  // delay by 250 milliseconds for each iteration
+    })(i);
+  }
+}
+
+// Set
+
+  </script>
+</body>
 </html>
