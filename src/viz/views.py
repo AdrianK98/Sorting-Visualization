@@ -11,7 +11,7 @@ def test(request):
 
 def bubbleSort(request):
     originalArr = [
-        random.randint(1, 30) for _ in range(6)
+        random.randint(1, 30) for _ in range(30)
     ]  # Generate a random list of integers to sort
     arr = originalArr.copy()
     listLength = len(arr)
@@ -21,7 +21,9 @@ def bubbleSort(request):
 
     for i in range(listLength):
         for j in range(0, listLength - i - 1):
-            # animations.append([j, j+1]) # Add elements that are compared into animation list
+            animations.append(
+                [j, j + 1]
+            )  # Add elements that are compared into animation list
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
                 animations.append(
