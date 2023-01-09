@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.bubbleSort, name="bubbleSort"),
+    path("bubble/", views.bubbleSort, name="bubbleSort"),
+    path("merge/", views.mergeSort, name="mergeSort"),
 ]

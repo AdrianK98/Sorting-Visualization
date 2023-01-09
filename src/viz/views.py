@@ -4,6 +4,8 @@ import random
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from .sort import mm
+
 
 def test(request):
     return render(request, "viz/algorithm.html")
@@ -34,4 +36,20 @@ def bubbleSort(request):
         request,
         "viz/algorithm.html",
         {"animations": animations, "valueList": originalArr},
+    )
+
+
+def mergeSort(request):
+    originalArr = [
+        random.randint(1, 30) for _ in range(30)
+    ]  # Generate a random list of integers to sort
+
+    arr = originalArr.copy()
+    animations = mm(arr)
+    print(animations)
+
+    return render(
+        request,
+        "viz/merge.html",
+        {"valueList": originalArr, "animations": json.dumps(animations)},
     )
