@@ -34,7 +34,7 @@ def bubbleSort(request):
 
     return render(
         request,
-        "viz/algorithm.html",
+        "viz/bubble.html",
         {"animations": animations, "valueList": originalArr},
     )
 
@@ -45,9 +45,11 @@ def mergeSort(request):
     ]  # Generate a random list of integers to sort
 
     arr = originalArr.copy()
-    animations = mm(arr)
-    print(animations)
 
+    # Get merge sort animations
+    animations = mm(arr)
+
+    print(animations)
     return render(
         request,
         "viz/merge.html",
