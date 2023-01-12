@@ -1,9 +1,4 @@
-def mm(alist):
-    print(alist)
-    return merge_sort(alist)
-
-
-def merge_sort(arr):
+def mergeSortAnimations(arr):
     # Initialize an empty list to store the animations
     animations = []
 
@@ -65,4 +60,17 @@ def merge_sort(arr):
 
     # Sort the entire array
     sort(arr, 0, len(arr) - 1)
+    return animations
+
+
+def selectionSortAnimations(arr):
+    animations = []
+    for i in range(len(arr)):
+        min_idx = i
+        for j in range(i + 1, len(arr)):
+            animations.append(["compare", j, min_idx])
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        animations.append(["swap", i, min_idx])
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
     return animations

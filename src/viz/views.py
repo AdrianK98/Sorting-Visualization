@@ -4,7 +4,7 @@ import random
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .sort import mm
+from .sort import mergeSortAnimations, selectionSortAnimations
 
 
 def test(request):
@@ -47,11 +47,29 @@ def mergeSort(request):
     arr = originalArr.copy()
 
     # Get merge sort animations
-    animations = mm(arr)
+    animations = mergeSortAnimations(arr)
 
     print(animations)
     return render(
         request,
         "viz/merge.html",
+        {"valueList": originalArr, "animations": json.dumps(animations)},
+    )
+
+
+def selectionSort(request):
+    originalArr = [
+        random.randint(1, 30) for _ in range(30)
+    ]  # Generate a random list of integers to sort
+
+    arr = originalArr.copy()
+
+    # Get selection sort animations
+    animations = selectionSortAnimations(arr)
+    print(originalArr)
+    print(animations)
+    return render(
+        request,
+        "viz/selection.html",
         {"valueList": originalArr, "animations": json.dumps(animations)},
     )

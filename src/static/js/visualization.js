@@ -137,3 +137,41 @@ function bubbleSort(animations) {
       })(i);
     }
   }
+
+
+function selectionSort(animations){
+  // Iterate over the animations
+  for (var i = 0; i < animations.length; i++) {
+    // Use a closure to preserve the value of i
+    (function(i) {
+      setTimeout(function() {
+        var animation = animations[i];
+        var a = animation[1];
+        var b = animation[2];
+
+        comparePos=[];
+        swapPos=[]
+
+
+		if(animation[0]==='compare'){
+			comparePos = [a];
+            extraColors=[b]
+		}
+
+		if(animation[0]==='swap'){
+            swapPos=[a];
+            [array[b],array[a]] = [array[a],array[b]];
+            swapPos=[a];
+
+		}
+
+        // Clear colors after animations ends
+        if(i+1 === animations.length){
+			extraColors=[];
+        	comparePos=[];
+			swapPos=[];
+        }
+      }, ANIMATION_SPEED_MS*i);  // delay by milliseconds for each iteration
+    })(i);
+  }
+}
