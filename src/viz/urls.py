@@ -8,4 +8,7 @@ urlpatterns = [
     path("selection/", views.selectionSort, name="selectionSort"),
     path("radix/", views.radixSort, name="radixSort"),
     path("quick/", views.quickSort, name="quickSort"),
+    path("", views.testing, name="testing"),
+    path("checkstatus/", views.checkStatus, name="checkStatus"),
+    path("getresults/", views.getResult, name="getResults"),
 ]

@@ -1,31 +1,65 @@
 import json
 import random
+import time
 
-from django.http import HttpResponse
+from celery.result import AsyncResult
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+
+from viz.tasks import bubbleTask, testTask
 
 from .sort import *
 
 
+def checkStatus(request):
+    print("CHECKING STATUS")
+    task_id = request.GET.get("task_id")
+    task = AsyncResult(task_id)
+    data = {"status": task.status}
+    return JsonResponse(data, status=200)
+
+
+def getResult(request):
+    print("RETRIVING RESULTS")
+    task_id = request.GET.get("task_id")
+    task = AsyncResult(task_id)
+    data = {"result": task.result}
+    return JsonResponse(data, status=200)
+
+
+def is_ajax(request):
+    return request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
+
+
 def getValueList():
     randomGeneratedValues = [
-        random.randint(10, 9999) for _ in range(300)
+        random.randint(10, 9999) for _ in range(30)
     ]  # Generate a random list of integers to sort
     return randomGeneratedValues
 
 
-def test(request):
-    return render(request, "viz/algorithm.html")
+def testing(request):
+
+    originalArr = getValueList()
+    arr = originalArr.copy()
+    task = testTask.apply_async(args=[arr])
+
+    return render(
+        request,
+        "viz/testing.html",
+        {"task_id": task.id, "valueList": originalArr},
+    )
 
 
 def bubbleSort(request):
     originalArr = getValueList()
     arr = originalArr.copy()
-    animations = bubbleSortAnimations(arr)
+    task = testTask.apply_async(args=[arr])
+
     return render(
         request,
         "viz/bubble.html",
-        {"animations": animations, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr},
     )
 
 
