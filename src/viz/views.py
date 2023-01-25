@@ -1,14 +1,14 @@
 import json
 import random
-import time
 
 from celery.result import AsyncResult
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from viz.tasks import bubbleTask, testTask
+from viz.tasks import getAnimationsTask
 
-from .sort import *
+from .methods import Method
+from .sortMethodHandler import SortMethodHandler
 
 
 def checkStatus(request):
@@ -33,7 +33,7 @@ def is_ajax(request):
 
 def getValueList():
     randomGeneratedValues = [
-        random.randint(10, 9999) for _ in range(30)
+        random.randint(10, 9999) for _ in range(100)
     ]  # Generate a random list of integers to sort
     return randomGeneratedValues
 
@@ -42,7 +42,8 @@ def testing(request):
 
     originalArr = getValueList()
     arr = originalArr.copy()
-    task = testTask.apply_async(args=[arr])
+
+    task = getAnimationsTask.apply_async(args=["bubbleSort", arr])
 
     return render(
         request,
@@ -54,7 +55,8 @@ def testing(request):
 def bubbleSort(request):
     originalArr = getValueList()
     arr = originalArr.copy()
-    task = testTask.apply_async(args=[arr])
+
+    task = getAnimationsTask.apply_async(args=["bubbleSort", arr])
 
     return render(
         request,
@@ -67,13 +69,12 @@ def mergeSort(request):
     originalArr = getValueList()
     arr = originalArr.copy()
 
-    # Get merge sort animations
-    animations = mergeSortAnimations(arr)
+    task = getAnimationsTask.apply_async(args=["mergeSort", arr])
 
     return render(
         request,
         "viz/merge.html",
-        {"valueList": originalArr, "animations": json.dumps(animations)},
+        {"task_id": task.id, "valueList": originalArr},
     )
 
 
@@ -82,12 +83,12 @@ def selectionSort(request):
     arr = originalArr.copy()
 
     # Get selection sort animations
-    animations = selectionSortAnimations(arr)
+    task = getAnimationsTask.apply_async(args=["selectionSort", arr])
 
     return render(
         request,
         "viz/selection.html",
-        {"valueList": originalArr, "animations": json.dumps(animations)},
+        {"task_id": task.id, "valueList": originalArr},
     )
 
 
@@ -97,12 +98,12 @@ def radixSort(request):
     arr = originalArr.copy()
 
     # Get selection sort animations
-    animations = radixSortAnimations(arr)
+    task = getAnimationsTask.apply_async(args=["radixSort", arr])
 
     return render(
         request,
         "viz/radix.html",
-        {"valueList": originalArr, "animations": json.dumps(animations)},
+        {"task_id": task.id, "valueList": originalArr},
     )
 
 
@@ -112,10 +113,10 @@ def quickSort(request):
     arr = originalArr.copy()
 
     # Get selection sort animations
-    animations = quickSortAnimations(arr)
+    task = getAnimationsTask.apply_async(args=["quickSort", arr])
 
     return render(
         request,
         "viz/quick.html",
-        {"valueList": originalArr, "animations": json.dumps(animations)},
+        {"task_id": task.id, "valueList": originalArr},
     )

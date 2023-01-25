@@ -52,15 +52,15 @@ var checkTaskStatus = function(task_id) {
               getTaskResult(task_id);
           } else if (data.status === "PROGRESS" || data.status === "STARTED" ) {
               console.log("Task not done yet!");
-              setTimeout(function() { checkTaskStatus(task_id); }, 500);
+              setTimeout(function() { checkTaskStatus(task_id); }, 1000);
           } else {
               // An error occurred, handle it as needed
-              console.log("ERROR");
+              console.log(data.status);
           }
       },
       error: function(xhr, status, error) {
           // An error occurred, handle it as needed
-          console.log("ERROR");
+          console.log("ERROR",status,error);
       }
   });
 };
@@ -71,10 +71,9 @@ $.ajax({
         url: "{% url 'getResults' %}",
         data: {'task_id': task_id},
         success: function(response) {
-            console.log("Getting task results...");
             animations = response.result;
             document.getElementById("start-button").disabled = false;
-            console.log("Ready to animate!");
+            console.log("Ready to go!");
 
         }
     });

@@ -2,12 +2,17 @@ import time
 
 from celery import shared_task
 
-from .sort import bubbleSortAnimations
+from .methods import Method
+from .sort import *
+from .sortMethodHandler import SortMethodHandler
 
 
 @shared_task
-def bubbleTask(array):
-    return bubbleSortAnimations(array)
+def getAnimationsTask(method, array):
+    time.sleep(2)
+    animations = SortMethodHandler.sortAndAnimate(method, array)
+    time.sleep(2)
+    return animations
 
 
 @shared_task
