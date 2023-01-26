@@ -8,11 +8,11 @@ from django.shortcuts import render
 from viz.tasks import getAnimationsTask
 
 from .methods import Method
+from .models import Values
 from .sortMethodHandler import SortMethodHandler
 
 
 def checkStatus(request):
-    print("CHECKING STATUS")
     task_id = request.GET.get("task_id")
     task = AsyncResult(task_id)
     data = {"status": task.status}
@@ -20,7 +20,6 @@ def checkStatus(request):
 
 
 def getResult(request):
-    print("RETRIVING RESULTS")
     task_id = request.GET.get("task_id")
     task = AsyncResult(task_id)
     data = {"result": task.result}
@@ -31,11 +30,23 @@ def is_ajax(request):
     return request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
 
 
-def getValueList():
+def getValueList(size):
     randomGeneratedValues = [
-        random.randint(10, 9999) for _ in range(100)
+        random.randint(10, 9999) for _ in range(size)
     ]  # Generate a random list of integers to sort
     return randomGeneratedValues
+
+
+def startingPage(request):
+
+    if request.method == "POST":
+        arraySize = request.POST.get("slider_value")
+        values = Values()
+        randomListOfValues = getValueList(int(arraySize))
+        values.valueList = json.dumps(randomListOfValues)
+        values.save()
+        return render(request, "viz/startPage.html", {"values": values})
+    return render(request, "viz/startPage.html", {})
 
 
 def testing(request):
@@ -52,21 +63,26 @@ def testing(request):
     )
 
 
-def bubbleSort(request):
-    originalArr = getValueList()
-    arr = originalArr.copy()
+def bubbleSort(request, pk):
+    jsonDec = json.decoder.JSONDecoder()
+    values = Values.objects.get(id=pk)
+    originalArr = jsonDec.decode(values.valueList)
 
+    arr = originalArr.copy()
     task = getAnimationsTask.apply_async(args=["bubbleSort", arr])
 
     return render(
         request,
         "viz/bubble.html",
-        {"task_id": task.id, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr, "values": values},
     )
 
 
-def mergeSort(request):
-    originalArr = getValueList()
+def mergeSort(request, pk):
+    jsonDec = json.decoder.JSONDecoder()
+    values = Values.objects.get(id=pk)
+    originalArr = jsonDec.decode(values.valueList)
+
     arr = originalArr.copy()
 
     task = getAnimationsTask.apply_async(args=["mergeSort", arr])
@@ -74,12 +90,15 @@ def mergeSort(request):
     return render(
         request,
         "viz/merge.html",
-        {"task_id": task.id, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr, "values": values},
     )
 
 
-def selectionSort(request):
-    originalArr = getValueList()
+def selectionSort(request, pk):
+    jsonDec = json.decoder.JSONDecoder()
+    values = Values.objects.get(id=pk)
+    originalArr = jsonDec.decode(values.valueList)
+
     arr = originalArr.copy()
 
     # Get selection sort animations
@@ -88,12 +107,14 @@ def selectionSort(request):
     return render(
         request,
         "viz/selection.html",
-        {"task_id": task.id, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr, "values": values},
     )
 
 
-def radixSort(request):
-    originalArr = getValueList()
+def radixSort(request, pk):
+    jsonDec = json.decoder.JSONDecoder()
+    values = Values.objects.get(id=pk)
+    originalArr = jsonDec.decode(values.valueList)
 
     arr = originalArr.copy()
 
@@ -103,12 +124,14 @@ def radixSort(request):
     return render(
         request,
         "viz/radix.html",
-        {"task_id": task.id, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr, "values": values},
     )
 
 
-def quickSort(request):
-    originalArr = getValueList()
+def quickSort(request, pk):
+    jsonDec = json.decoder.JSONDecoder()
+    values = Values.objects.get(id=pk)
+    originalArr = jsonDec.decode(values.valueList)
 
     arr = originalArr.copy()
 
@@ -118,5 +141,5 @@ def quickSort(request):
     return render(
         request,
         "viz/quick.html",
-        {"task_id": task.id, "valueList": originalArr},
+        {"task_id": task.id, "valueList": originalArr, "values": values},
     )
