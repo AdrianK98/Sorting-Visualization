@@ -9,9 +9,9 @@ from .sortMethodHandler import SortMethodHandler
 
 @shared_task
 def getAnimationsTask(method, array):
-    time.sleep(2)
+    # time.sleep(2)
     animations = SortMethodHandler.sortAndAnimate(method, array)
-    time.sleep(2)
+    # time.sleep(2)
     return animations
 
 

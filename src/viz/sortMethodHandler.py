@@ -13,6 +13,7 @@ sortAlgorithms = {
     "bubbleSort": bubbleSortAnimations,
     "mergeSort": mergeSortAnimations,
     "selectionSort": selectionSortAnimations,
+    "insertSort": insertSortAnimations,
     "quickSort": quickSortAnimations,
     "radixSort": radixSortAnimations,
 }

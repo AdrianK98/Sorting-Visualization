@@ -19,7 +19,7 @@
                   <div class="row">
                     <div class="col">
                       <div class="row">
-                      <button id="start-button" class="btn btn-success btn-lg" onclick="bubbleSort(animations)"disabled>Start</button>
+                      <button id="start-button" class="btn btn-success btn-lg" onclick="insertionSort(animations)"disabled>Start</button>
                       </div>
                       <div class="row"><button id="start-button" class="btn btn-danger btn-lg mt-2" onclick="window.location.reload();">Reset</button></div>
                     </div>
@@ -36,10 +36,13 @@
                     Kroki sortowania
                   </div>
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item ps-2" id="state0">powtórz (liczbaElementów -1 ) razy</li>
-                    <li class="list-group-item" id="state1">dla j = 1 do ostatniNieposortowanyElement - 1</li>
-                    <li class="list-group-item ps-4" id="state2">jeżeli lewyElement > prawyElement</li>
-                    <li class="list-group-item ps-5" id="state3">zamień (lewyElement, prawyElement)</li>
+                    <li class="list-group-item ps-1" id="state0">zaznacz pierwszy element jako posortowany</li>
+                    <li class="list-group-item ps-1" id="state1">powtórz dla każego nieposortowanego elementu<br>
+                        oznacz pierwszy nieposortowany element jako klucz
+                    </li>
+                    <li class="list-group-item ps-3" id="state3">jeżeli elementPrzedKluczem >= klucz <br> oznacz jako posortowany</</li>
+                    <li class="list-group-item ps-3" id="state2">powtórz liczbaPosortowanychElementów razy</li>
+                    <li class="list-group-item ps-5" id="state4">jeżeli elementPrzedKluczem < klucz <br> zamień je miejscem</li>
                   </ul>
                 </div>
 
@@ -61,7 +64,7 @@ const stateThree = document.getElementById('state2');
 const stateFour = document.getElementById('state3');
 
 function changeStateBackgroundColor(stateValue) {
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 4; i++) {
     const element = document.getElementById(`state${i}`);
     if (i === stateValue) {
       element.style.backgroundColor = '#BAC2B2'; // Change to your desired background color

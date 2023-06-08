@@ -9,20 +9,21 @@ def bubbleSortAnimations(arr):
     )  # List of each comparison and replace, next iteration is doubled if values are replaced
 
     for i in range(listLength):
+        animations.append(["step", 0, 0, 0, 1])
         for j in range(0, listLength - i - 1):
             animations.append(
-                [j, j + 1]
+                ["compare", j, j + 1, "step", 2]
             )  # Add elements that are compared into animation list
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                animations.append(
-                    [j, j + 1]
-                )  # Add elements that are replaced into animation list
+                animations.append(["swap", j, j + 1, "step", 3])
+                # Add elements that are replaced into animation list
+        animations.append(["sorted", list(range(listLength, listLength - 1 - i, -1))])
 
     endTme = time.time()
     sortTime = endTme - startTime
     print(f"Bubble sort time: {sortTime}")
-
+    print(animations)
     return animations
 
 
@@ -41,18 +42,22 @@ def mergeSortAnimations(arr):
         j = 0
         # Initialize an index for the original array
         k = start
+
         # Merge the two halves
         while i < len(left) and j < len(right):
+            animations.append(["step", 0, 0, 2])
             # If the element in the left half is smaller, add it to the original array
             if left[i] < right[j]:
+                animations.append(["step", 0, 0, 3])
                 arr[k] = left[i]
                 i += 1
             # If the element in the right half is smaller, add it to the original array
             else:
+                animations.append(["step", 0, 0, 4])
                 arr[k] = right[j]
                 j += 1
             # Add a merge animation
-            animations.append(["merge", [k, arr[k]]])
+            animations.append(["merge", [k, arr[k]], "step", 5])
             # Increment the index for the original array
             k += 1
 
@@ -79,11 +84,12 @@ def mergeSortAnimations(arr):
             # Split the array
             mid = (start + end) // 2
             # Add a split animation
-            animations.append(["split", [i for i in range(start, end + 1)]])
+            animations.append(["split", [i for i in range(start, end + 1)], "step", 0])
             # Recursively sort the two halves
             mergeSort(arr, start, mid)
             mergeSort(arr, mid + 1, end)
             # Merge the sorted halves
+            animations.append(["step", 0, 0, 1])
             merge(arr, start, mid, end)
 
     # Sort the entire array
@@ -94,13 +100,16 @@ def mergeSortAnimations(arr):
 def selectionSortAnimations(arr):
     animations = []
     for i in range(len(arr)):
+        animations.append(["step", 0, 0, 0, 0])
         min_idx = i
         for j in range(i + 1, len(arr)):
-            animations.append(["compare", j, min_idx])
+            animations.append(["compare", j, min_idx, "step", 1])
             if arr[j] < arr[min_idx]:
+                animations.append(["step", 0, 0, 0, 2])
                 min_idx = j
-        animations.append(["swap", i, min_idx])
+        animations.append(["swap", i, min_idx, "step", 3])
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
+        animations.append(["sorted", [k for k in range(i + 1)]])
     return animations
 
 
@@ -197,4 +206,33 @@ def quickSortAnimations(array):
     animations = []
     quickSort(array, 0, len(array) - 1, animations)
 
+    return animations
+
+
+def insertSortAnimations(arr):
+    animations = []
+    if (n := len(arr)) <= 1:
+        return
+    animations.append(["step", 0, 0, 0, 0])
+    animations.append(["sorted", [0]])
+    for i in range(1, n):
+
+        key = arr[i]
+
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        animations.append(["key", i, "step", 0, 1])
+        j = i - 1
+        if j >= 0 and key >= arr[j]:
+            animations.append(["step", 0, 0, 0, 3])
+        while j >= 0 and key < arr[j]:
+            animations.append(["compare", j, "step", 0, 2])
+            animations.append(["swap", j + 1, j, "step", 4])
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+        animations.append(["sorted", [k for k in range(i + 1)]])
+
+    print(animations)
     return animations

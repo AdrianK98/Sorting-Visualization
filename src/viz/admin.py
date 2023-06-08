@@ -3,4 +3,10 @@ from django.contrib import admin
 from .models import Values
 
 # Register your models here.
-admin.site.register(Values)
+
+
+class ValuesAdmin(admin.ModelAdmin):
+    list_display = ("id", "valueList")
+
+
+admin.site.register(Values, ValuesAdmin)
