@@ -42,18 +42,18 @@ def getValueList(size):
 
 def startingPage(request):
 
-    if request.method == "POST":
-        arraySize = request.POST.get("slider_value")
+    # if request.method == "POST":
+    #     arraySize = request.POST.get("slider_value")
 
         # Create model of Values if user has selected array size
-        values = Values()
-        randomListOfValues = getValueList(int(arraySize))
+    values = Values()
+    randomListOfValues = getValueList(int(11))
 
-        # Serialize values
-        values.valueList = json.dumps(randomListOfValues)
-        values.save()
-        return render(request, "viz/startPage.html", {"values": values})
-    return render(request, "viz/startPage.html", {})
+    # Serialize values
+    values.valueList = json.dumps(randomListOfValues)
+    values.save()
+    return render(request, "viz/startPage.html", {"values": values,"pageName": "start"})
+    # return render(request, "viz/startPage.html", {})
 
 
 # ONLY FOR TESTING
