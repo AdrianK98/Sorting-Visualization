@@ -2,28 +2,22 @@ import time
 
 
 def bubbleSortAnimations(arr):
-    startTime = time.time()
     listLength = len(arr)
     animations = (
         []
-    )  # List of each comparison and replace, next iteration is doubled if values are replaced
+    )  
 
     for i in range(listLength):
         animations.append(["step", 0, 0, 0, 1])
         for j in range(0, listLength - i - 1):
             animations.append(
                 ["compare", j, j + 1, "step", 2]
-            )  # Add elements that are compared into animation list
+            ) 
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
                 animations.append(["swap", j, j + 1, "step", 3])
-                # Add elements that are replaced into animation list
+                
         animations.append(["sorted", list(range(listLength, listLength - 1 - i, -1))])
-
-    endTme = time.time()
-    sortTime = endTme - startTime
-    print(f"Bubble sort time: {sortTime}")
-    print(animations)
     return animations
 
 

@@ -222,6 +222,7 @@ function selectionSort(animations){
 		}
 
 		if(animation[0]==='swap'){
+      extraColors=[];
       comparePosition=[];
             swapPosition=[firstIndex];
             [array[secondIndex],array[firstIndex]] = [array[firstIndex],array[secondIndex]];
