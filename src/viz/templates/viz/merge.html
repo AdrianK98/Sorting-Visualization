@@ -1,0 +1,98 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<script>
+  var array = {{valueList}};
+
+</script>
+
+
+
+  <div class="container">
+    <div class="row">
+      <h1 class="display-3 text-center">Sortowanie przez scalanie</h1><hr>
+      <div class="col-8" id="canvasContent"></div>
+      <div class="col-4">
+          <div class="row">
+            <div class="col">
+
+              <div class="container text-center">
+                <div class="row">
+                  <div class="col">
+                    <div class="row">
+                    <button id="start-button" class="btn btn-success btn-lg" onclick="mergeSort(animations)"disabled>Start</button>
+                    </div>
+                    <div class="row"><button id="start-button" class="btn btn-danger btn-lg mt-2" onclick="window.location.reload();">Reset</button></div>
+                  </div>
+                  <div class="col">
+                    <p>Szybkość</p>
+                    <input type="range" min="100" max="2000" value="1000" class="slider" id="speedSlider"><br>
+                    <span id="speedSliderValue">1000 ms</span>
+                  </div>
+                </div>
+              </div>
+              <br><br>
+              <div class="card">
+                <div class="card-header">
+                  Kroki sortowania
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item ps-2" id="state0">podziel zbiór na partycje</li>
+
+                  <li class="list-group-item ps-2" id="state1">rekursywnie złącz sąsiednie partycje</li>
+                  <li class="list-group-item ps-1" id="state2">dla i=lewaTabela do prawaTabela</li>
+                  <li class="list-group-item ps-3" id="state3">jeżeli elementLewejTabeli <= elementPrawejTabeli <br>kopiuj elementLewejTabeli</li>
+                  <li class="list-group-item ps-3" id="state4">inaczej: kopiuj elementPrawejTabeli</li>
+                  <li class="list-group-item ps-2" id="state5">kopiuj elementy spowrotem do oryginalnej tabeli</li>
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+const stateOne = document.getElementById('state0');
+const stateTwo = document.getElementById('state1');
+const stateThree = document.getElementById('state2');
+const stateFour = document.getElementById('state3');
+const stateFive = document.getElementById('state4');
+const stateSix = document.getElementById('state5');
+
+function changeStateBackgroundColor(stateValue) {
+  for (let i = 0; i <= 5; i++) {
+    const element = document.getElementById(`state${i}`);
+    if (i === stateValue) {
+      element.style.backgroundColor = '#BAC2B2'; // Change to your desired background color
+    } else {
+      element.style.backgroundColor = '';
+    }
+  }
+
+}
+
+var speedSlider = document.getElementById("speedSlider");
+var output = document.getElementById("speedSliderValue");
+
+// Update the variable and output value when the slider value changes
+speedSlider.addEventListener("input", function() {
+
+
+ANIMATION_SPEED_MS = this.value;
+output.textContent = this.value + " ms";
+// Use the variable in your code as needed
+
+});
+
+
+  </script>
+
+{% endblock content %}

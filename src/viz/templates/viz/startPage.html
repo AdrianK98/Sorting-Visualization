@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+{% comment %} <form method="POST" action="{% url 'startingPage' %}">
+    {% csrf_token %}
+    <h2>Select array size</h2>
+    <input type="range" id="slider" name="slider_value" min="1" max="30" value="20" oninput="showValue(this.value)" />
+    <span id="range"></span>
+    <input type="submit" value="Submit">
+    <script>
+        function showValue(newValue) {
+            document.getElementById("range").innerHTML=newValue;
+        }
+    </script>
+</form>
+<h1>{{values.valueList}}</h1> {% endcomment %}
+
+<div class="container text-center justify-content-center">
+    <div class="row">
+        <div class="col text-center justify-content-center">
+            <div class="card" style="width: 18rem;">
+                <a href="{% url 'bubbleSort' values.id %}">
+                <img src="https://fullyunderstood.com/wp-content/uploads/2019/09/Bubble-Sort-3.png" class="card-img-top" alt="...">
+                </a>
+            </div>
+        </div>
+      <div class="col text-center justify-content-center">
+
+            <div class="card" style="width: 18rem;">
+                <a href="{% url 'selectionSort' values.id %}">
+                <img src="https://fullyunderstood.com/wp-content/uploads/2019/09/Selection-Sort.png" class="card-img-top" alt="...">
+                </a>
+            </div>
+
+      </div>
+      <div class="col text-center justify-content-center">
+            <div class="card" style="width: 18rem;">
+            <a href="{% url 'insertSort' values.id %}">
+            <img src="https://fullyunderstood.com/wp-content/uploads/2019/09/Insertion-Sort.png" class="card-img-top" alt="...">
+            </a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col text-center justify-content-center">
+            <div class="card" style="width: 18rem;">
+            <a href="{% url 'mergeSort' values.id %}">
+            <img src="https://fullyunderstood.com/wp-content/uploads/2019/09/Merge-Sort.png" class="card-img-top" alt="...">
+            </a>
+        </div>
+    </div>
+  </div>
+
+{% endblock content %}
