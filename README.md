@@ -15,3 +15,13 @@ It contains visualization of
 
 
 Application is primary made with Django and p5.js. Backend generates animations frames and frontend with use of p5.js visualize them.
+
+
+
+
+## Technologies Used
+
+Django
+Bootstrap
+Docker
+p5.js
