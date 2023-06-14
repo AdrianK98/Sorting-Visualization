@@ -21,7 +21,7 @@ Application is primary made with Django and p5.js. Backend generates animations 
 
 ## Technologies Used
 
-Django
-Bootstrap
-Docker
-p5.js
+* Django
+* Bootstrap
+* Docker
+* p5.js
