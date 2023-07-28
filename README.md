@@ -13,8 +13,12 @@ It contains visualization of
 ![image](https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/2992461b-e6a0-4dc6-9932-431720ea1951)
 
 
+https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/35333c69-244c-4eef-8b53-18625088a27a
 
-https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/26bca8e0-69b9-4d4e-89b1-ff4e32fbe79b
+
+
+
+
 
 
 
