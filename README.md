@@ -9,11 +9,13 @@ It contains visualization of
 * Inssertion Sort
 * Merge Sort
 
-
-![image](https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/2992461b-e6a0-4dc6-9932-431720ea1951)
-
+![image](https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/628cf579-b071-4ac5-a532-d67ea17f6ea2)
 
 https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/35333c69-244c-4eef-8b53-18625088a27a
+
+
+https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/e19bddcc-f0cb-480a-9e4a-3e1b3471710b
+
 
 
 
