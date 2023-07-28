@@ -14,6 +14,10 @@ It contains visualization of
 
 
 
+https://github.com/AdrianK98/Sorting-Visualization/assets/65118310/26bca8e0-69b9-4d4e-89b1-ff4e32fbe79b
+
+
+
 Application is primary made with Django and p5.js. Backend generates animations frames and frontend with use of p5.js visualize them.
 
 
