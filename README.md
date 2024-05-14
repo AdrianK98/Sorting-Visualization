@@ -35,3 +35,6 @@ Application is primary made with Django and p5.js. Backend generates animations 
 * Bootstrap
 * Docker
 * p5.js
+* Rabbitmq
+* Celery
+* Flower
